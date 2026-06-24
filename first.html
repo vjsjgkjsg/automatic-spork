@@ -6,7 +6,7 @@
     <title>CodeNexa — Главная</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ——— Базовый сброс ——— */
+        /* ——— БАЗОВЫЕ СТИЛИ ——— */
         * {
             margin: 0;
             padding: 0;
@@ -20,6 +20,10 @@
             line-height: 1.6;
             padding: 0 20px 40px;
             min-height: 100vh;
+            transition: filter 0.3s ease;
+        }
+        body.modal-open {
+            overflow: hidden;
         }
 
         .container {
@@ -28,7 +32,7 @@
             padding: 0 20px;
         }
 
-        /* ——— ШАПКА ——— */
+        /* ——— ШАПКА И БУРГЕР ——— */
         .header {
             display: flex;
             justify-content: space-between;
@@ -37,6 +41,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             flex-wrap: wrap;
             gap: 15px;
+            position: relative;
+            z-index: 100;
         }
 
         .header-left {
@@ -73,6 +79,7 @@
             margin-left: 6px;
         }
 
+        /* Десктопная навигация */
         .header-nav {
             display: flex;
             gap: 8px;
@@ -100,6 +107,126 @@
         .header-nav a.logout:hover {
             background: rgba(248, 113, 113, 0.1);
             border-color: rgba(248, 113, 113, 0.4);
+        }
+
+        /* Бургер-иконка (скрыта на десктопе) */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            background: none;
+            border: none;
+            z-index: 101;
+        }
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: #ffffff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Мобильное меню (сайдбар) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 25px;
+            transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-avatar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .sidebar-avatar .avatar {
+            width: 52px;
+            height: 52px;
+            font-size: 22px;
+        }
+        .sidebar-avatar .user-name {
+            font-size: 18px;
+        }
+        .sidebar-avatar .user-name span {
+            display: block;
+            font-size: 13px;
+            color: #9090b0;
+            margin-left: 0;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .sidebar-nav a {
+            color: #d0d0e0;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+        .sidebar-nav a:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+        .sidebar-nav a.logout {
+            color: #f87171;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+
+        /* Оверлей (затемнение) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 150;
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* ——— ОБЩИЕ СТИЛИ СЕКЦИЙ ——— */
@@ -145,12 +272,25 @@
             font-size: 18px;
             color: #c0c0d0;
             max-width: 680px;
+            margin-bottom: 16px;
+        }
+        .hero .text-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #4b70f5;
+            padding: 20px 28px;
+            border-radius: 0 16px 16px 0;
+            margin-top: 20px;
+            max-width: 720px;
+        }
+        .hero .text-block p {
+            margin-bottom: 8px;
+            font-size: 16px;
         }
 
-        /* ——— ДОСТИЖЕНИЯ (ЦИФРЫ) ——— */
+        /* ——— ДОСТИЖЕНИЯ ——— */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 24px;
             margin-top: 10px;
         }
@@ -183,6 +323,34 @@
             font-weight: 500;
         }
 
+        /* ——— ЦЕННОСТИ ——— */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+        .value-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 28px 24px;
+            transition: transform 0.25s ease;
+        }
+        .value-card:hover {
+            transform: translateY(-4px);
+        }
+        .value-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .value-card p {
+            color: #b0b0c0;
+            font-size: 15px;
+        }
+
         /* ——— ГОТОВЫЕ РЕШЕНИЯ ——— */
         .solutions-grid {
             display: grid;
@@ -197,6 +365,7 @@
             border-radius: 24px;
             padding: 28px 24px;
             transition: transform 0.25s ease, border-color 0.3s ease;
+            cursor: pointer;
         }
         .solution-card:hover {
             transform: translateY(-4px);
@@ -306,6 +475,36 @@
             transform: translateY(-2px);
         }
 
+        /* ——— ОТЗЫВЫ ——— */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        .review-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 24px;
+        }
+        .review-card .name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .review-card .role {
+            color: #9090b0;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        .review-card .text {
+            color: #c0c0d0;
+            font-size: 15px;
+            font-style: italic;
+        }
+
         /* ——— ФУТЕР ——— */
         .footer {
             margin-top: 80px;
@@ -316,18 +515,141 @@
             font-size: 14px;
         }
 
+        /* ——— МОДАЛЬНЫЕ ОКНА ——— */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 40px 36px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+        }
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: #a0a0b0;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .modal h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .modal p {
+            color: #b0b0c0;
+            margin-bottom: 16px;
+        }
+        .modal ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .modal ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0d0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .modal ul li span {
+            color: #4b70f5;
+            font-weight: 600;
+        }
+
+        .modal input, .modal textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: white;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            transition: border-color 0.3s;
+        }
+        .modal input:focus, .modal textarea:focus {
+            outline: none;
+            border-color: #4b70f5;
+        }
+        .modal textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .modal .submit-btn {
+            background: linear-gradient(135deg, #4b70f5, #7c3aed);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .modal .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(75, 112, 245, 0.4);
+        }
+
         /* ——— АДАПТИВ ——— */
+        @media (max-width: 992px) {
+            .header-nav {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+        }
+
         @media (max-width: 768px) {
             .header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
+                flex-direction: row;
+                padding: 16px 0 20px;
             }
             .header-left {
-                justify-content: center;
-            }
-            .header-nav {
-                justify-content: center;
+                flex: 1;
             }
             .hero h1 {
                 font-size: 34px;
@@ -346,6 +668,12 @@
             .order-block {
                 padding: 30px 20px;
             }
+            .modal {
+                padding: 30px 20px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -355,14 +683,46 @@
             .stat-number {
                 font-size: 32px;
             }
-            .header-nav a {
-                padding: 6px 14px;
-                font-size: 13px;
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .stat-card {
+                padding: 20px 12px;
+            }
+            .sidebar {
+                width: 280px;
+                right: -280px;
             }
         }
     </style>
 </head>
 <body>
+
+       <!-- ===== ОВЕРЛЕЙ ДЛЯ САЙДБАРА ===== -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ===== САЙДБАР (МОБИЛЬНОЕ МЕНЮ) ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-avatar">
+            <div class="avatar">АИ</div>
+            <div class="user-name">
+                Алексей Иванов
+                <span>разработчик</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#about">О компании</a>
+            <a href="#values">Ценности</a>
+            <a href="#solutions">Решения</a>
+            <a href="#training">Обучение</a>
+            <a href="#reviews">Отзывы</a>
+            <a href="#order">Заказать</a>
+            <a href="index.html" class="logout">Выйти</a>
+        </nav>
+    </aside>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="container">
 
         <!-- ===== ШАПКА ===== -->
@@ -371,51 +731,95 @@
                 <div class="avatar">АИ</div>
                 <div class="user-name">
                     Алексей Иванов
-                    <span>·  разработчик</span>
+                    <span>· разработчик</span>
                 </div>
             </div>
+
+            <!-- Десктопная навигация -->
             <nav class="header-nav">
                 <a href="#about">О нас</a>
+                <a href="#values">Ценности</a>
                 <a href="#solutions">Решения</a>
                 <a href="#training">Обучение</a>
+                <a href="#reviews">Отзывы</a>
                 <a href="#order">Заказать</a>
                 <a href="index.html" class="logout">Выйти</a>
             </nav>
+
+            <!-- Бургер-кнопка -->
+            <button class="burger" id="burgerBtn" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </header>
 
         <!-- ===== ГЕРОЙ / О КОМПАНИИ ===== -->
         <section class="hero" id="about">
             <h1>Мы — <span class="highlight">CodeNexa</span></h1>
             <p>
-                Создаём цифровые продукты, которые меняют бизнес. Обучаем программированию 
-                с нуля до уровня профессионала. Наша миссия — сделать технологии доступными 
-                и понятными каждому.
+                <strong>CodeNexa</strong> — это команда инженеров, дизайнеров и преподавателей, 
+                объединённая страстью к технологиям. Мы создаём цифровые продукты с 2018 года, 
+                помогая стартапам и корпорациям расти быстрее.
             </p>
-            <p style="margin-top: 10px; color: #9090a8;">
-                С 2018 года мы помогаем стартапам, предприятиям и частным лицам внедрять 
-                инновационные решения.
+            <p>
+                Наша философия — простота, надёжность и человеческий подход. Мы не гонимся за 
+                хайпом, а строим устойчивые решения, которые работают годами.
             </p>
+            <div class="text-block">
+                <p>📌 <strong>Миссия:</strong> Сделать программирование доступным для каждого, 
+                а цифровые продукты — полезными и понятными.</p>
+                <p>📌 <strong>Подход:</strong> Индивидуальный трек для каждого клиента и студента. 
+                Мы слушаем, анализируем и предлагаем лучшее.</p>
+            </div>
         </section>
 
-        <!-- ===== ДОСТИЖЕНИЯ ===== -->
+        <!-- ===== ЦЕННОСТИ ===== -->
+        <section id="values">
+            <h2 class="section-title">Наши <span class="highlight">ценности</span></h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>🧠 Экспертность</h3>
+                    <p>Более 50 реализованных проектов в fintech, edtech, e‑commerce. 
+                    Каждый сотрудник — практик с опытом 5+ лет.</p>
+                </div>
+                <div class="value-card">
+                    <h3>🤝 Прозрачность</h3>
+                    <p>Открытая коммуникация на всех этапах: от идеи до релиза. 
+                    Вы всегда знаете, что происходит с вашим проектом.</p>
+                </div>
+                <div class="value-card">
+                    <h3>🚀 Обучение</h3>
+                    <p>Мы не просто делаем — мы учим. Наши выпускники работают в 
+                    топовых IT-компаниях и создают свои стартапы.</p>
+                </div>
+                <div class="value-card">
+                    <h3>💡 Инновации</h3>
+                    <p>Используем передовые технологии: AI, ML, блокчейн, облачные архитектуры. 
+                    Но всегда с умом, без овер-инжиниринга.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ДОСТИЖЕНИЯ (только реальные цифры) ===== -->
         <section>
-            <h2 class="section-title">Цифры, говорящие за <span class="highlight">нас</span></h2>
+            <h2 class="section-title">Цифры <span class="highlight">доверия</span></h2>
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Выпускников</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">120</div>
-                    <div class="stat-label">Реализованных проектов</div>
-                </div>
                 <div class="stat-card">
                     <div class="stat-number">7 лет</div>
                     <div class="stat-label">На рынке IT</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-number">450+</div>
+                    <div class="stat-label">Выпускников курсов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">120</div>
+                    <div class="stat-label">Завершённых проектов</div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-number">98%</div>
-                    <div class="stat-label">Довольных клиентов</div>
+                    <div class="stat-label">Рекомендуют нас</div>
                 </div>
             </div>
         </section>
@@ -423,26 +827,26 @@
         <!-- ===== ГОТОВЫЕ РЕШЕНИЯ ===== -->
         <section id="solutions">
             <h2 class="section-title">Готовые <span class="highlight">решения</span></h2>
-            <p class="section-desc">Внедряем проверенные продукты, которые экономят ваше время и бюджет.</p>
+            <p class="section-desc">Проверенные продукты, которые можно адаптировать под ваш бизнес за 2–4 недели.</p>
             <div class="solutions-grid">
-                <div class="solution-card">
+                <div class="solution-card" data-modal="solution1">
                     <h3>CRM-система</h3>
-                    <p>Управление клиентами, лидами и продажами в одном окне. Интеграция с 1С и телефонией.</p>
+                    <p>Управление клиентами, лидами и продажами. Интеграция с 1С, телефонией и почтой.</p>
                     <span class="solution-tag">Бизнес</span>
                 </div>
-                <div class="solution-card">
-                    <h3>Чат-бот для сайта</h3>
-                    <p>Автоматический ответ на 80% вопросов, повышение конверсии в 2 раза. На базе GPT.</p>
+                <div class="solution-card" data-modal="solution2">
+                    <h3>Чат-бот с AI</h3>
+                    <p>Автоматический ответ на 80% вопросов, повышение конверсии до 2 раз. На базе GPT.</p>
                     <span class="solution-tag">AI</span>
                 </div>
-                <div class="solution-card">
+                <div class="solution-card" data-modal="solution3">
                     <h3>Мобильное приложение</h3>
-                    <p>Кроссплатформенные приложения для iOS и Android. Дизайн и полный цикл разработки.</p>
+                    <p>Кроссплатформенные приложения для iOS и Android. Дизайн, разработка, публикация.</p>
                     <span class="solution-tag">Mobile</span>
                 </div>
-                <div class="solution-card">
+                <div class="solution-card" data-modal="solution4">
                     <h3>Аналитический дашборд</h3>
-                    <p>Визуализация данных в реальном времени. Подключение к любым источникам.</p>
+                    <p>Визуализация данных в реальном времени. Подключение к любым источникам (SQL, API).</p>
                     <span class="solution-tag">Data</span>
                 </div>
             </div>
@@ -454,11 +858,33 @@
                 <div class="training-text">
                     <h2>Обучение <span class="highlight">программированию</span></h2>
                     <p>
-                        Курсы по Python, JavaScript, Java, C++ и веб-разработке. Живые уроки, 
-                        практические проекты и менторская поддержка. Старт в любое время.
+                        Курсы по Python, JavaScript, Java, C++ и веб-разработке. Живые вебинары, 
+                        проекты с реальными заказчиками, менторство. Старт в любой момент.
                     </p>
                 </div>
-                <a href="#" class="training-btn">Выбрать курс</a>
+                <button class="training-btn" id="openCoursesModal">Выбрать курс</button>
+            </div>
+        </section>
+
+        <!-- ===== ОТЗЫВЫ ===== -->
+        <section id="reviews">
+            <h2 class="section-title">Что говорят <span class="highlight">наши клиенты</span></h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="name">Дмитрий К.</div>
+                    <div class="role">CEO, стартап «EdTech»</div>
+                    <div class="text">«CodeNexa разработали для нас MVP за 3 недели. Команда предложила нестандартное решение, которое сэкономило нам 40% бюджета. Рекомендую!»</div>
+                </div>
+                <div class="review-card">
+                    <div class="name">Анна С.</div>
+                    <div class="role">Product-менеджер, «ФинТех»</div>
+                    <div class="text">«Прошли курс по Python для аналитики. Преподаватели — практики, материал структурирован. После курса я уверенно пишу скрипты для обработки данных.»</div>
+                </div>
+                <div class="review-card">
+                    <div class="name">Игорь В.</div>
+                    <div class="role">Основатель, «MarketHub»</div>
+                    <div class="text">«Заказали мобильное приложение. Ребята сделали дизайн, продумали UX и запустили в сторы. Поддержка до сих пор оперативно помогает.»</div>
+                </div>
             </div>
         </section>
 
@@ -468,9 +894,9 @@
                 <h2>Заказать индивидуальную <span class="highlight">разработку</span></h2>
                 <p>
                     Нужно уникальное решение? Расскажите о задаче — мы предложим идеальный стек 
-                    и сроки.
+                    и реалистичные сроки.
                 </p>
-                <a href="#" class="order-btn">Обсудить проект</a>
+                <button class="order-btn" id="openOrderModal">Обсудить проект</button>
             </div>
         </section>
 
@@ -480,5 +906,166 @@
         </footer>
 
     </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ КУРСОВ ===== -->
+    <div class="modal-overlay" id="coursesModal">
+        <div class="modal">
+            <button class="modal-close" data-close="coursesModal">&times;</button>
+            <h2>Выберите курс</h2>
+            <p>Живые занятия, практика и менторство. Скидка 10% при оплате сегодня.</p>
+            <ul>
+                <li>Python-разработчик <span>от 3 мес.</span></li>
+                <li>JavaScript / React <span>от 4 мес.</span></li>
+                <li>Java-разработка <span>от 4 мес.</span></li>
+                <li>C++ для систем <span>от 5 мес.</span></li>
+                <li>Веб-дизайн и UX <span>от 3 мес.</span></li>
+            </ul>
+            <button class="submit-btn" data-close="coursesModal">Записаться</button>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАКАЗА ===== -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <button class="modal-close" data-close="orderModal">&times;</button>
+            <h2>Обсудить проект</h2>
+            <p>Заполните форму, и мы свяжемся с вами в течение 2 часов.</p>
+            <form id="orderForm">
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="text" placeholder="Телефон (опционально)">
+                <textarea placeholder="Опишите задачу" rows="4"></textarea>
+                <button type="submit" class="submit-btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ РЕШЕНИЙ (детали) ===== -->
+    <div class="modal-overlay" id="solutionModal">
+        <div class="modal">
+            <button class="modal-close" data-close="solutionModal">&times;</button>
+            <h2 id="solutionModalTitle">Название решения</h2>
+            <p id="solutionModalDesc">Описание решения.</p>
+            <p><strong>Стоимость:</strong> от 500 000 ₽ (под ключ)</p>
+            <p><strong>Срок:</strong> 2–4 недели</p>
+            <button class="submit-btn" data-close="solutionModal">Заказать консультацию</button>
+        </div>
+    </div>
+
+    <script>
+        // ——— БУРГЕР-МЕНЮ ———
+        const burgerBtn = document.getElementById('burgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            const isOpen = sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            burgerBtn.classList.toggle('active');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
+        burgerBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Закрывать меню при клике на ссылку в сайдбаре
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (sidebar.classList.contains('open')) toggleMenu();
+            });
+        });
+
+        // ——— МОДАЛЬНЫЕ ОКНА ———
+        const modals = document.querySelectorAll('.modal-overlay');
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+        }
+
+        // Закрытие по кнопке "крестик" или по кнопке с data-close
+        document.querySelectorAll('[data-close]').forEach(el => {
+            el.addEventListener('click', () => {
+                const id = el.getAttribute('data-close');
+                closeModal(id);
+            });
+        });
+
+        // Закрытие по клику на оверлей
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                }
+            });
+        });
+
+        // Открытие модалки курсов
+        document.getElementById('openCoursesModal').addEventListener('click', () => {
+            openModal('coursesModal');
+        });
+
+        // Открытие модалки заказа
+        document.getElementById('openOrderModal').addEventListener('click', () => {
+            openModal('orderModal');
+        });
+
+        // Открытие модалки решения (по клику на карточку)
+        const solutionCards = document.querySelectorAll('.solution-card');
+        const solutionModalTitle = document.getElementById('solutionModalTitle');
+        const solutionModalDesc = document.getElementById('solutionModalDesc');
+
+        const solutionData = {
+            solution1: { title: 'CRM-система', desc: 'Готовая CRM для управления клиентами, лидами и продажами. Интегрируется с 1С, телефонией и почтовыми сервисами. Легко настраивается под бизнес-процессы.' },
+            solution2: { title: 'Чат-бот с AI', desc: 'Интеллектуальный чат-бот на базе GPT, который отвечает на 80% типовых вопросов, помогает собирать заявки и повышает конверсию в 2 раза.' },
+            solution3: { title: 'Мобильное приложение', desc: 'Кроссплатформенные приложения для iOS и Android. Включает дизайн, разработку, тестирование и публикацию в магазинах.' },
+            solution4: { title: 'Аналитический дашборд', desc: 'Визуализация данных в реальном времени. Подключается к SQL, API, Excel. Помогает принимать решения на основе данных.' }
+        };
+
+        solutionCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                const key = card.getAttribute('data-modal');
+                const data = solutionData[key];
+                if (data) {
+                    solutionModalTitle.textContent = data.title;
+                    solutionModalDesc.textContent = data.desc;
+                    openModal('solutionModal');
+                }
+            });
+        });
+
+        // ——— ОБРАБОТКА ФОРМЫ ЗАКАЗА (демо) ———
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
+            closeModal('orderModal');
+            document.getElementById('orderForm').reset();
+        });
+
+        // ——— ЗАКРЫТИЕ МОДАЛКИ ПО ESC ———
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modals.forEach(modal => {
+                    if (modal.classList.contains('active')) {
+                        modal.classList.remove('active');
+                        document.body.classList.remove('modal-open');
+                    }
+                });
+                if (sidebar.classList.contains('open')) toggleMenu();
+            }
+        });
+    </script>
 </body>
-  </html>
+</html>
