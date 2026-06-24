@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeNexa — Главная</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ——— Базовый сброс ——— */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050505;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 0 20px 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ——— ШАПКА ——— */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4b70f5, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(75, 112, 245, 0.3);
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 0.3px;
+        }
+        .user-name span {
+            color: #a0a0b8;
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 6px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .header-nav a {
+            color: #b0b0c0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .header-nav a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .header-nav a.logout {
+            color: #f87171;
+            border-color: rgba(248, 113, 113, 0.2);
+        }
+        .header-nav a.logout:hover {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: rgba(248, 113, 113, 0.4);
+        }
+
+        /* ——— ОБЩИЕ СТИЛИ СЕКЦИЙ ——— */
+        section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .section-title .highlight {
+            background: linear-gradient(135deg, #4b70f5, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-desc {
+            color: #a0a0b8;
+            font-size: 18px;
+            max-width: 640px;
+            margin-bottom: 32px;
+        }
+
+        /* ——— ГЕРОЙ / О КОМПАНИИ ——— */
+        .hero {
+            padding: 20px 0 10px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #4b70f5, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #c0c0d0;
+            max-width: 680px;
+        }
+
+        /* ——— ДОСТИЖЕНИЯ (ЦИФРЫ) ——— */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+            margin-top: 10px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        .stat-number {
+            font-size: 40px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4b70f5, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        .stat-label {
+            color: #b0b0c0;
+            font-size: 15px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* ——— ГОТОВЫЕ РЕШЕНИЯ ——— */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .solution-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 28px 24px;
+            transition: transform 0.25s ease, border-color 0.3s ease;
+        }
+        .solution-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(75, 112, 245, 0.3);
+        }
+        .solution-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .solution-card p {
+            color: #b0b0c0;
+            font-size: 15px;
+        }
+        .solution-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: rgba(75, 112, 245, 0.15);
+            color: #8aabff;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* ——— ОБУЧЕНИЕ ——— */
+        .training-block {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            padding: 40px 36px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+        .training-text {
+            flex: 1 1 300px;
+        }
+        .training-text h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .training-text p {
+            color: #b0b0c0;
+            font-size: 16px;
+            max-width: 500px;
+        }
+        .training-btn {
+            background: linear-gradient(135deg, #4b70f5, #7c3aed);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(75, 112, 245, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .training-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(75, 112, 245, 0.5);
+        }
+
+        /* ——— ЗАКАЗАТЬ УСЛУГУ ——— */
+        .order-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 40px 36px;
+            text-align: center;
+        }
+        .order-block h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .order-block p {
+            color: #b0b0c0;
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+        .order-btn {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 48px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .order-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* ——— ФУТЕР ——— */
+        .footer {
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: #606070;
+            font-size: 14px;
+        }
+
+        /* ——— АДАПТИВ ——— */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .header-left {
+                justify-content: center;
+            }
+            .header-nav {
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .training-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            .training-text p {
+                margin: 0 auto;
+            }
+            .order-block {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            .stat-number {
+                font-size: 32px;
+            }
+            .header-nav a {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== ШАПКА ===== -->
+        <header class="header">
+            <div class="header-left">
+                <div class="avatar">АИ</div>
+                <div class="user-name">
+                    Алексей Иванов
+                    <span>·  разработчик</span>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="#about">О нас</a>
+                <a href="#solutions">Решения</a>
+                <a href="#training">Обучение</a>
+                <a href="#order">Заказать</a>
+                <a href="index.html" class="logout">Выйти</a>
+            </nav>
+        </header>
+
+        <!-- ===== ГЕРОЙ / О КОМПАНИИ ===== -->
+        <section class="hero" id="about">
+            <h1>Мы — <span class="highlight">CodeNexa</span></h1>
+            <p>
+                Создаём цифровые продукты, которые меняют бизнес. Обучаем программированию 
+                с нуля до уровня профессионала. Наша миссия — сделать технологии доступными 
+                и понятными каждому.
+            </p>
+            <p style="margin-top: 10px; color: #9090a8;">
+                С 2018 года мы помогаем стартапам, предприятиям и частным лицам внедрять 
+                инновационные решения.
+            </p>
+        </section>
+
+        <!-- ===== ДОСТИЖЕНИЯ ===== -->
+        <section>
+            <h2 class="section-title">Цифры, говорящие за <span class="highlight">нас</span></h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Выпускников</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">120</div>
+                    <div class="stat-label">Реализованных проектов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7 лет</div>
+                    <div class="stat-label">На рынке IT</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Довольных клиентов</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ГОТОВЫЕ РЕШЕНИЯ ===== -->
+        <section id="solutions">
+            <h2 class="section-title">Готовые <span class="highlight">решения</span></h2>
+            <p class="section-desc">Внедряем проверенные продукты, которые экономят ваше время и бюджет.</p>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>CRM-система</h3>
+                    <p>Управление клиентами, лидами и продажами в одном окне. Интеграция с 1С и телефонией.</p>
+                    <span class="solution-tag">Бизнес</span>
+                </div>
+                <div class="solution-card">
+                    <h3>Чат-бот для сайта</h3>
+                    <p>Автоматический ответ на 80% вопросов, повышение конверсии в 2 раза. На базе GPT.</p>
+                    <span class="solution-tag">AI</span>
+                </div>
+                <div class="solution-card">
+                    <h3>Мобильное приложение</h3>
+                    <p>Кроссплатформенные приложения для iOS и Android. Дизайн и полный цикл разработки.</p>
+                    <span class="solution-tag">Mobile</span>
+                </div>
+                <div class="solution-card">
+                    <h3>Аналитический дашборд</h3>
+                    <p>Визуализация данных в реальном времени. Подключение к любым источникам.</p>
+                    <span class="solution-tag">Data</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ОБУЧЕНИЕ ===== -->
+        <section id="training">
+            <div class="training-block">
+                <div class="training-text">
+                    <h2>Обучение <span class="highlight">программированию</span></h2>
+                    <p>
+                        Курсы по Python, JavaScript, Java, C++ и веб-разработке. Живые уроки, 
+                        практические проекты и менторская поддержка. Старт в любое время.
+                    </p>
+                </div>
+                <a href="#" class="training-btn">Выбрать курс</a>
+            </div>
+        </section>
+
+        <!-- ===== ЗАКАЗАТЬ УСЛУГУ ===== -->
+        <section id="order">
+            <div class="order-block">
+                <h2>Заказать индивидуальную <span class="highlight">разработку</span></h2>
+                <p>
+                    Нужно уникальное решение? Расскажите о задаче — мы предложим идеальный стек 
+                    и сроки.
+                </p>
+                <a href="#" class="order-btn">Обсудить проект</a>
+            </div>
+        </section>
+
+        <!-- ===== ФУТЕР ===== -->
+        <footer class="footer">
+            &copy; 2026 CodeNexa — Все права защищены. Сделано с ❤️ для технологий.
+        </footer>
+
+    </div>
+</body>
+  </html>
