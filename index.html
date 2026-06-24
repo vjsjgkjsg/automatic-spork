@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeNexa — Вход в будущее</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050505;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Динамичный фон с частицами и градиентами */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(75, 112, 245, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(0, 200, 255, 0.04) 0%, transparent 40%);
+            animation: pulseBackground 12s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+
+        @keyframes pulseBackground {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Плавающие световые пятна (эффект глубины) */
+        .glow-spot {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-spot--1 {
+            width: 300px;
+            height: 300px;
+            background: #4b70f5;
+            top: -80px;
+            right: -80px;
+            animation: floatGlow 8s infinite alternate ease-in-out;
+        }
+        .glow-spot--2 {
+            width: 400px;
+            height: 400px;
+            background: #7c3aed;
+            bottom: -120px;
+            left: -120px;
+            animation: floatGlow 10s infinite alternate-reverse ease-in-out;
+        }
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -20px) scale(1.2); }
+        }
+
+        /* Главный контейнер — стекло с улучшенной текстурой */
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px) saturate(1.4);
+            -webkit-backdrop-filter: blur(16px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            padding: 64px 80px;
+            text-align: center;
+            max-width: 720px;
+            width: 90%;
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.01);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 60px rgba(75, 112, 245, 0.05);
+        }
+
+        /* Логотип с анимацией */
+        .logo-wrapper {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-icon {
+            display: inline-block;
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, #ffffff 20%, #c0b5ff 60%, #6a5acd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(106, 90, 205, 0.3));
+            animation: logoPulse 3s infinite alternate ease-in-out;
+            line-height: 1;
+        }
+
+        @keyframes logoPulse {
+            0% { filter: drop-shadow(0 0 20px rgba(106, 90, 205, 0.2)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 40px rgba(106, 90, 205, 0.5)); transform: scale(1.02); }
+        }
+
+        /* Заголовок */
+        h1 {
+            font-size: 56px;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #4b70f5, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .subtitle {
+            color: #a0a0b8;
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 48px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Кнопки */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 18px 52px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            display: inline-block;
+            letter-spacing: 1.2px;
+            position: relative;
+            overflow: hidden;
+            min-width: 180px;
+            text-align: center;
+            border: none;
+        }
+
+        /* Кнопка Вход (основная) */
+        .btn-primary {
+            background: linear-gradient(135deg, #4b70f5, #7c3aed);
+            color: white;
+            box-shadow: 0 8px 30px rgba(75, 112, 245, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(75, 112, 245, 0.6);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        /* Кнопка Регистрация (второстепенная) */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
+        }
+
+        /* Декоративная линия под кнопками (эффект) */
+        .footer-note {
+            margin-top: 40px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 640px) {
+            .container {
+                padding: 40px 24px;
+                border-radius: 32px;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .logo-icon {
+                font-size: 44px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                letter-spacing: 2px;
+                margin-bottom: 32px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 18px 24px;
+                min-width: unset;
+                font-size: 15px;
+            }
+
+            .buttons {
+                gap: 14px;
+            }
+
+            .glow-spot--1,
+            .glow-spot--2 {
+                display: none;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 32px;
+            }
+            .logo-icon {
+                font-size: 36px;
+            }
+            .container {
+                padding: 30px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Декоративные световые пятна -->
+    <div class="glow-spot glow-spot--1"></div>
+    <div class="glow-spot glow-spot--2"></div>
+
+    <div class="container">
+        <div class="logo-wrapper">
+            <span class="logo-icon">&lt;/&gt;</span>
+        </div>
+
+        <h1>Code<span class="highlight">Nexa</span></h1>
+        <p class="subtitle">Твой путь в мир технологий</p>
+
+        <div class="buttons">
+            <a href="first.html" class="btn btn-secondary">Регистрация</a>
+            <a href="first.html" class="btn btn-primary">Войти</a>
+        </div>
+
+        <div class="footer-note">⚡ создано для будущего</div>
+    </div>
+</body>
+  </html>
